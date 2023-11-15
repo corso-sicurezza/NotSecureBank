@@ -12,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -89,10 +90,10 @@ public class DBUtil {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                String name = resultSet.getString("NAME");
-                String email = resultSet.getString("EMAIL");
-                String subject = resultSet.getString("SUBJECT");
-                String message = resultSet.getString("COMMENTS");
+                String name = StringEscapeUtils.escapeHtml4(resultSet.getString("NAME"));
+                String email = StringEscapeUtils.escapeHtml4(resultSet.getString("EMAIL"));
+                String subject = StringEscapeUtils.escapeHtml4(resultSet.getString("SUBJECT"));
+                String message = StringEscapeUtils.escapeHtml4(resultSet.getString("COMMENTS"));
                 long id = resultSet.getLong("FEEDBACK_ID");
                 Feedback feedback = new Feedback(id, name, email, subject, message);
                 feedbackList.add(feedback);
