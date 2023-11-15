@@ -31,9 +31,9 @@ public class FeedbackServlet extends HttpServlet {
         String name = request.getParameter("name");
         if (name != null) {
             request.setAttribute("message_feedback", name);
-            String email = request.getParameter("email_addr");
-            String subject = request.getParameter("subject");
-            String comments = request.getParameter("comments");
+            String email = org.owasp.encoder.Encode.forHtml(request.getParameter("email_addr"));
+            String subject = org.owasp.encoder.Encode.forHtml(request.getParameter("subject"));
+            String comments = org.owasp.encoder.Encode.forHtml(request.getParameter("comments"));
             // store feedback in the DB - display their feedback once submitted
 
             String feedbackId = OperationsUtil.sendFeedback(name, email, subject, comments);
